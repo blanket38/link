@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tools Portal</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#f5f5f7;
-  --card:#ffffff;
   --text:#1d1d1f;
   --sub:#6e6e73;
   --accent:#0071e3;
-  --border:#e5e5ea;
 }
 
 *{
@@ -25,133 +22,217 @@
 }
 
 body{
-  background:var(--bg);
+  background:#fff;
   color:var(--text);
-  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ナビバー */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:60px;
+  backdrop-filter:blur(20px);
+  background:rgba(255,255,255,0.7);
+  border-bottom:1px solid rgba(0,0,0,0.05);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:600;
+  z-index:1000;
+  transition:all .4s ease;
+}
+
+nav.scrolled{
+  background:rgba(255,255,255,0.95);
+}
+
+/* ヒーロー */
+.hero{
+  height:100vh;
   display:flex;
   flex-direction:column;
-}
-
-header{
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  padding:80px 20px 40px;
-  animation:fadeIn 1s ease forwards;
-}
-
-header h1{
-  font-size:40px;
-  font-weight:600;
-  letter-spacing:-0.5px;
-}
-
-header p{
-  margin-top:12px;
-  font-size:18px;
-  color:var(--sub);
-}
-
-.container{
-  max-width:1000px;
-  margin:40px auto 100px;
   padding:0 20px;
-  display:grid;
-  gap:30px;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  background:radial-gradient(circle at 50% 30%, #f2f2f7 0%, #ffffff 60%);
 }
 
-.card{
-  background:var(--card);
-  padding:40px 30px;
-  border-radius:20px;
-  border:1px solid var(--border);
-  text-decoration:none;
-  color:inherit;
-  transition:all .4s cubic-bezier(.4,0,.2,1);
+.hero h1{
+  font-size:clamp(42px,6vw,80px);
+  font-weight:700;
+  letter-spacing:-2px;
+  line-height:1.1;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1.2s cubic-bezier(.16,1,.3,1);
+}
+
+.hero p{
+  margin-top:25px;
+  font-size:22px;
+  color:var(--sub);
   opacity:0;
   transform:translateY(30px);
+  transition:1.4s cubic-bezier(.16,1,.3,1);
 }
 
-.card h2{
-  font-size:22px;
-  font-weight:600;
-}
-
-.card p{
-  margin-top:10px;
-  font-size:15px;
-  color:var(--sub);
-}
-
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 20px 40px rgba(0,0,0,.08);
-  border-color:transparent;
-}
-
-.card:hover h2{
-  color:var(--accent);
-}
-
-.show{
+.hero.show h1,
+.hero.show p{
   opacity:1;
   transform:translateY(0);
 }
 
-footer{
-  margin-top:auto;
+/* セクション */
+.section{
+  padding:180px 20px;
+  max-width:1200px;
+  margin:auto;
   text-align:center;
-  padding:30px;
-  font-size:13px;
+}
+
+.section h2{
+  font-size:42px;
+  font-weight:700;
+  letter-spacing:-1px;
+  margin-bottom:80px;
+}
+
+/* カード */
+.cards{
+  display:grid;
+  gap:60px;
+  grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+}
+
+.card{
+  position:relative;
+  padding:60px;
+  border-radius:36px;
+  background:#f5f5f7;
+  text-decoration:none;
+  color:inherit;
+  overflow:hidden;
+  transition:.6s cubic-bezier(.16,1,.3,1);
+  opacity:0;
+  transform:translateY(60px);
+}
+
+.card h3{
+  font-size:28px;
+  font-weight:600;
+}
+
+.card p{
+  margin-top:18px;
+  font-size:17px;
   color:var(--sub);
 }
 
-/* アニメーション */
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
+/* 光の追従 */
+.card::before{
+  content:"";
+  position:absolute;
+  top:var(--y);
+  left:var(--x);
+  width:400px;
+  height:400px;
+  background:radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 60%);
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  transition:opacity .4s;
+  opacity:0;
+}
+
+.card:hover::before{
+  opacity:1;
+}
+
+.card:hover{
+  transform:scale(1.03);
+  box-shadow:0 40px 80px rgba(0,0,0,.12);
+}
+
+.card.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* フッター */
+footer{
+  text-align:center;
+  padding:100px 20px;
+  color:var(--sub);
+  font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Tools Portal</h1>
-  <p>業務効率化ツール一覧</p>
-</header>
+<nav>Tools Portal</nav>
 
-<div class="container">
-  
-  <a href="https://blanket38.github.io/kairicalc/" target="_blank" class="card">
-    <h2>週次 予測・結果 乖離計算</h2>
-    <p>週ごとの予測値と実績値の乖離を自動計算します。</p>
-  </a>
+<section class="hero">
+  <h1>計算を、美しく。</h1>
+  <p>業務効率を次のレベルへ。</p>
+</section>
 
-  <a href="https://blanket38.github.io/sintyokucalc/" target="_blank" class="card">
-    <h2>進捗時間計算ツール</h2>
-    <p>進捗状況に応じた時間計算を効率化します。</p>
-  </a>
+<section class="section">
+  <h2>プロフェッショナルツール</h2>
 
-</div>
+  <div class="cards">
+
+    <a href="https://blanket38.github.io/kairicalc/" target="_blank" class="card">
+      <h3>週次 予測・結果 乖離計算</h3>
+      <p>予測値と実績値の差を可視化し、迅速な意思決定を支援します。</p>
+    </a>
+
+    <a href="https://blanket38.github.io/sintyokucalc/" target="_blank" class="card">
+      <h3>進捗時間計算ツール</h3>
+      <p>進捗データから必要時間をスマートに算出します。</p>
+    </a>
+
+  </div>
+</section>
 
 <footer>
-  © 2026 Tools Portal
+ 2026 Tools Portal
 </footer>
 
 <script>
-// スクロールアニメーション
-const cards = document.querySelectorAll('.card');
+// ナビ透過変化
+window.addEventListener("scroll",()=>{
+  document.querySelector("nav")
+  .classList.toggle("scrolled",window.scrollY>30);
+});
 
+// ヒーロー表示
+window.addEventListener("load",()=>{
+  document.querySelector(".hero").classList.add("show");
+});
+
+// スクロール表示
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
-      entry.target.classList.add('show');
+      entry.target.classList.add("show");
     }
   });
 },{threshold:0.2});
 
-cards.forEach(card=>{
-  observer.observe(card);
+document.querySelectorAll(".card").forEach(el=>{
+  observer.observe(el);
+});
+
+// 光追従
+document.querySelectorAll(".card").forEach(card=>{
+  card.addEventListener("mousemove",e=>{
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--x', e.clientX - rect.left + 'px');
+    card.style.setProperty('--y', e.clientY - rect.top + 'px');
+  });
 });
 </script>
 
