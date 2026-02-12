@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tools Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#f5f5f7;
+  --card:#ffffff;
+  --text:#1d1d1f;
+  --sub:#6e6e73;
+  --accent:#0071e3;
+  --border:#e5e5ea;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+header{
+  text-align:center;
+  padding:80px 20px 40px;
+  animation:fadeIn 1s ease forwards;
+}
+
+header h1{
+  font-size:40px;
+  font-weight:600;
+  letter-spacing:-0.5px;
+}
+
+header p{
+  margin-top:12px;
+  font-size:18px;
+  color:var(--sub);
+}
+
+.container{
+  max-width:1000px;
+  margin:40px auto 100px;
+  padding:0 20px;
+  display:grid;
+  gap:30px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+}
+
+.card{
+  background:var(--card);
+  padding:40px 30px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  text-decoration:none;
+  color:inherit;
+  transition:all .4s cubic-bezier(.4,0,.2,1);
+  opacity:0;
+  transform:translateY(30px);
+}
+
+.card h2{
+  font-size:22px;
+  font-weight:600;
+}
+
+.card p{
+  margin-top:10px;
+  font-size:15px;
+  color:var(--sub);
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 40px rgba(0,0,0,.08);
+  border-color:transparent;
+}
+
+.card:hover h2{
+  color:var(--accent);
+}
+
+.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+footer{
+  margin-top:auto;
+  text-align:center;
+  padding:30px;
+  font-size:13px;
+  color:var(--sub);
+}
+
+/* アニメーション */
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Tools Portal</h1>
+  <p>業務効率化ツール一覧</p>
+</header>
+
+<div class="container">
+  
+  <a href="https://blanket38.github.io/kairicalc/" target="_blank" class="card">
+    <h2>週次 予測・結果 乖離計算</h2>
+    <p>週ごとの予測値と実績値の乖離を自動計算します。</p>
+  </a>
+
+  <a href="https://blanket38.github.io/sintyokucalc/" target="_blank" class="card">
+    <h2>進捗時間計算ツール</h2>
+    <p>進捗状況に応じた時間計算を効率化します。</p>
+  </a>
+
+</div>
+
+<footer>
+  © 2026 Tools Portal
+</footer>
+
+<script>
+// スクロールアニメーション
+const cards = document.querySelectorAll('.card');
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+},{threshold:0.2});
+
+cards.forEach(card=>{
+  observer.observe(card);
+});
+</script>
+
+</body>
+</html>
